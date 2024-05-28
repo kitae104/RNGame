@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, TextInput, View } from 'react-native';
 import PrimaryButton from '../components/PrimaryButton';
+import Colors from '../constants/colors';
 
 const StartGameScreen = ({onPickNumber}) => {
   const [enteredNumber, setEnteredNumber] = useState(''); // 입력한 숫자
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     marginTop: 100, // 위쪽으로 100px 이동
     marginHorizontal: 24, // 좌우 여백 24px
     padding: 16, // 내부 공백 16px
-    backgroundColor: '#2e0118', // 배경색
+    backgroundColor: Colors.primary800, // 배경색
     borderRadius: 8, // 모서리 둥글게
 
     // Android
@@ -77,9 +78,9 @@ const styles = StyleSheet.create({
     height: 50, // 높이 50px
     width: 50, // 너비 50px
     fontSize: 32, // 글자 크기 32px
-    borderBottomColor: '#ddb52f', // 아래 테두리 색
+    borderBottomColor: Colors.accent500, // 아래 테두리 색
     borderBottomWidth: 2, // 아래 테두리 두께
-    color: '#ddb52f', // 글자 색
+    color: Colors.accent500, // 글자 색
     marginVertical: 8, // 상하 여백 8px
     fontWeight: 'bold', // 글자 굵게55555
     textAlign: 'center', // 가운데 정렬
