@@ -1,12 +1,27 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import Title from '../components/Title';
+
 
 const GameScreen = () => {
   return (
-    <View>      
-      
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>    
+      {/* GUESS */}
+      <View>
+        <Text>Higher or lower?</Text>
+        {/* + - */}
+      </View>
+      <View>{/* LOG ROUND */}</View>
     </View>
   );
 };
 
 export default GameScreen;
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,  // 전체 공간 사용 
+    padding: 24,  // padding
+  },  
+});
