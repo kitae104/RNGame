@@ -1,9 +1,8 @@
-import { TextInput, View, Button, StyleSheet } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, StyleSheet, TextInput, View } from 'react-native';
+import PrimaryButton from '../components/PrimaryButton';
 
-const StartGameScreen = () => {
+const StartGameScreen = ({onPickNumber}) => {
   const [enteredNumber, setEnteredNumber] = useState(''); // 입력한 숫자
 
   const numberInputHandler = (inputText) => {
@@ -25,7 +24,8 @@ const StartGameScreen = () => {
       ); // 잘못된 숫자
       return;
     }
-    console.log("Valid number: ", chosenNumber);
+    
+    onPickNumber(chosenNumber); // 사용자가 선택한 숫자 전달
   };
 
   return (
