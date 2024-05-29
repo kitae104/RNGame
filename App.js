@@ -17,7 +17,7 @@ export default function App() {
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />; // 시작 화면
 
   if (userNumber) {
-    screen = <GameScreen />; // 게임 화면
+    screen = <GameScreen userNumber={userNumber} />; // 게임 화면
   }
 
   return (

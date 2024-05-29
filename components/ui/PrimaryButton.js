@@ -1,15 +1,15 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import Colors from '../constants/colors';
-
+import Colors from '../../constants/colors';
 
 const PrimaryButton = ({ children, onPress }) => {
   return (
     <View style={styles.buttonOuterContainer}>
       <Pressable
-        style={({pressed}) =>   
-        pressed     // pressed가 true일 때 스타일을 적용
-            ? [styles.buttonInnerContainer, styles.pressed] // pressed일 때 스타일
-            : styles.buttonInnerContainer   // pressed가 아닐 때 스타일
+        style={
+          ({ pressed }) =>
+            pressed // pressed가 true일 때 스타일을 적용
+              ? [styles.buttonInnerContainer, styles.pressed] // pressed일 때 스타일
+              : styles.buttonInnerContainer // pressed가 아닐 때 스타일
         }
         onPress={onPress}
         android_ripple={{ color: Colors.primary600 }}
