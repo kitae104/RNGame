@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Alert, StyleSheet, TextInput, View } from 'react-native';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import Title from '../components/ui/Title';
 import Colors from '../constants/colors';
 
-const StartGameScreen = ({onPickNumber}) => {
+const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState(''); // 입력한 숫자
 
   const numberInputHandler = (inputText) => {
@@ -17,37 +20,41 @@ const StartGameScreen = ({onPickNumber}) => {
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredNumber); // 입력한 숫자를 정수로 변환
 
-    if(isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
       Alert.alert(
-        '잘못된 숫자!', 
-        '숫자는 반드시 1 에서 99 사이의 값이어야 합니다.', 
-        [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
+        '잘못된 숫자!',
+        '숫자는 반드시 1 에서 99 사이의 값이어야 합니다.',
+        [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }],
       ); // 잘못된 숫자
       return;
     }
-    
+
     onPickNumber(chosenNumber); // 사용자가 선택한 숫자 전달
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false}
-        onChangeText={numberInputHandler}
-        value={enteredNumber}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Enter a Number</InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -55,25 +62,11 @@ const StartGameScreen = ({onPickNumber}) => {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    justifyContent: 'center', // 수직 정렬
-    alignItems: 'center', // 수평 정렬
-    //flex: 1,            // 가능한 공간을 모두 차지
+  rootContainer: {
+    flex: 1, // 가능한 공간을 모두 차지
     marginTop: 100, // 위쪽으로 100px 이동
-    marginHorizontal: 24, // 좌우 여백 24px
-    padding: 16, // 내부 공백 16px
-    backgroundColor: Colors.primary800, // 배경색
-    borderRadius: 8, // 모서리 둥글게
-
-    // Android
-    elevation: 4, // 그림자(only Android)
-
-    // iOS
-    shadowColor: 'black', // 그림자 색
-    shadowOffset: { width: 0, height: 2 }, // 그림자 위치
-    shadowRadius: 6, // 그림자 반경
-    shadowOpacity: 0.25, // 그림자 투명도
-  },
+    alignItems: 'center', // 수평 정렬
+  },    
   numberInput: {
     height: 50, // 높이 50px
     width: 50, // 너비 50px

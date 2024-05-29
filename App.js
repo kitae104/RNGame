@@ -4,21 +4,33 @@ import { useState } from 'react';
 
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 import Colors from './constants/colors';
-
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(); // 사용자가 선택한 숫자
+  const [gameIsOver, setGameIsOver] = useState(true); // 게임 종료 여부
 
   const pickedNumberHandler = (pickedNumber) => {
     setUserNumber(pickedNumber); // 사용자가 선택한 숫자 저장
+    setGameIsOver(false); // 게임 종료 여부 초기화
+  };
+
+  const gameOverHandler = () => {
+    setGameIsOver(true);
   };
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />; // 시작 화면
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} />; // 게임 화면
+    screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler}/>; // 게임 화면
   }
+
+  if (gameIsOver && userNumber){    // 게임 종료 화면(게임이 종료되었고 사용자가 숫자를 선택했을 때)
+    screen = <GameOverScreen />
+  }
+
+  
 
   return (
     <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
