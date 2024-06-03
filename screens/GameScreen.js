@@ -35,6 +35,12 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
   }, [currentGuess, userNumber, onGameOver]); // 랜덤 숫자와 사용자가 선택한 숫자가 변경될 때마다 실행
 
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
+
   const nextGuessHandler = (direction) => {
     // direction : 'lower' or 'higher'
     if (

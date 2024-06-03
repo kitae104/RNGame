@@ -2,6 +2,9 @@ import { StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -10,6 +13,16 @@ import Colors from './constants/colors';
 export default function App() {
   const [userNumber, setUserNumber] = useState(); // 사용자가 선택한 숫자
   const [gameIsOver, setGameIsOver] = useState(true); // 게임 종료 여부
+  const [guessRounds, setGuessRounds] = useState(0); // 게임 라운드 수 [추가
+
+  const [fontsLoaded] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
+
+  if(!fontsLoaded){
+    return <AppLoading />
+  }
 
   const pickedNumberHandler = (pickedNumber) => {
     setUserNumber(pickedNumber); // 사용자가 선택한 숫자 저장
@@ -20,6 +33,12 @@ export default function App() {
     setGameIsOver(true);
   };
 
+  const startNewGameHandler = () => {
+    setUserNumber(null);
+    setGuessRounds(0);
+    setGameIsOver(false);
+  };
+
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />; // 시작 화면
 
   if (userNumber) {
@@ -27,7 +46,7 @@ export default function App() {
   }
 
   if (gameIsOver && userNumber){    // 게임 종료 화면(게임이 종료되었고 사용자가 숫자를 선택했을 때)
-    screen = <GameOverScreen />
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>
   }
 
   
