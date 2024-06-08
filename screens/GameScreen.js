@@ -27,7 +27,9 @@ let maxBoundary = 100;
 const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userNumber); // 랜덤 숫자 생성
   const [currentGuess, setCurrentGuess] = useState(initialGuess); // 랜덤 숫자 생성
-  const [guessRounds, setGuessRounds] = useState([initialGuess]);
+  const [guessRounds, setGuessRounds] = useState([initialGuess]); // 라운드 수
+
+
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -65,6 +67,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       currentGuess,
     ); // 새로운 랜덤 숫자 생성
     setCurrentGuess(newRndNumber); // 새로운 랜덤 숫자 생성
+    setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds]); // 라운드 수 증가
   };
 
   return (
