@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, View } from 'react-native';
 
-import { Ionicons} from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import NumberContainer from '../components/game/NumberContainer';
 import Card from '../components/ui/Card';
@@ -27,6 +27,7 @@ let maxBoundary = 100;
 const GameScreen = ({ userNumber, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userNumber); // 랜덤 숫자 생성
   const [currentGuess, setCurrentGuess] = useState(initialGuess); // 랜덤 숫자 생성
+  const [guessRounds, setGuessRounds] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -39,7 +40,6 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     minBoundary = 1;
     maxBoundary = 100;
   }, []);
-
 
   const nextGuessHandler = (direction) => {
     // direction : 'lower' or 'higher'
@@ -72,21 +72,29 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
+        <InstructionText style={styles.instructionText}>
+          Higher or lower?
+        </InstructionText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
-              <Ionicons name='remove-outline' size={24} color='white' />
+              <Ionicons name="remove-outline" size={24} color="white" />
             </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
-              <Ionicons name='add-outline' size={24} color='white' />
+              <Ionicons name="add-outline" size={24} color="white" />
             </PrimaryButton>
           </View>
         </View>
       </Card>
-      <View>{/* LOG ROUND */}</View>
+      <View>
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => <Text>{itemData.item}</Text>}
+          keyExtractor={(item) => item.toString()}
+        />
+      </View>
     </View>
   );
 };
