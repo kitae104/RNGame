@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, View, Text } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -70,6 +70,8 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds]); // 라운드 수 증가
   };
 
+  const guessRoundsListLength = guessRounds.length;
+
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
@@ -91,11 +93,11 @@ const GameScreen = ({ userNumber, onGameOver }) => {
           </View>
         </View>
       </Card>
-      <View>
+      <View style={styles.listContainer}>
         <FlatList
           data={guessRounds}
           renderItem={(itemData) => <Text>{itemData.item}</Text>}
-          keyExtractor={(item) => item.toString()}
+          keyExtractor={(item) => item}
         />
       </View>
     </View>
@@ -117,5 +119,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1, // 가능한 공간을 모두 차지
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
