@@ -20,8 +20,8 @@ export default function App() {
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 
-  if(!fontsLoaded){
-    return <AppLoading />
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
 
   const pickedNumberHandler = (pickedNumber) => {
@@ -29,30 +29,41 @@ export default function App() {
     setGameIsOver(false); // 게임 종료 여부 초기화
   };
 
-  const gameOverHandler = () => {
+  const gameOverHandler = (numberOfRounds) => {
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
   };
 
   const startNewGameHandler = () => {
     setUserNumber(null);
     setGuessRounds(0);
-    setGameIsOver(false);
+    // setGameIsOver(false);
   };
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />; // 시작 화면
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler}/>; // 게임 화면
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    ); // 게임 화면
   }
 
-  if (gameIsOver && userNumber){    // 게임 종료 화면(게임이 종료되었고 사용자가 숫자를 선택했을 때)
-    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>
+  if (gameIsOver && userNumber) {
+    // 게임 종료 화면(게임이 종료되었고 사용자가 숫자를 선택했을 때)
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
-
-  
 
   return (
-    <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
+    <LinearGradient
+      colors={[Colors.primary700, Colors.accent500]}
+      style={styles.rootScreen}
+    >
       <ImageBackground
         source={require('./assets/dice.jpg')}
         resizeMode="cover"

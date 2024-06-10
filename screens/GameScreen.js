@@ -8,6 +8,7 @@ import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import Title from '../components/ui/Title';
+import GuessLogItem from '../components/game/GuessLogItem';
 
 const generateRandomBetween = (min, max, exclude) => {
   // 랜덤 숫자 생성 함수
@@ -29,12 +30,10 @@ const GameScreen = ({ userNumber, onGameOver }) => {
   const [currentGuess, setCurrentGuess] = useState(initialGuess); // 랜덤 숫자 생성
   const [guessRounds, setGuessRounds] = useState([initialGuess]); // 라운드 수
 
-
-
   useEffect(() => {
     if (currentGuess === userNumber) {
       // 랜덤 숫자와 사용자가 선택한 숫자가 같다면
-      onGameOver(); // 게임 종료
+      onGameOver(guessRounds.length); // 게임 종료
     }
   }, [currentGuess, userNumber, onGameOver]); // 랜덤 숫자와 사용자가 선택한 숫자가 변경될 때마다 실행
 
@@ -56,10 +55,11 @@ const GameScreen = ({ userNumber, onGameOver }) => {
     }
     if (direction === 'lower') {
       // 사용자가 선택한 숫자보다 낮은 경우
-      maxBoundary = currentGuess - 1;
+      maxBoundary = currentGuess;
     } else {
       minBoundary = currentGuess + 1;
     }
+
     console.log(minBoundary, maxBoundary);
     const newRndNumber = generateRandomBetween(
       minBoundary,
@@ -67,7 +67,7 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       currentGuess,
     ); // 새로운 랜덤 숫자 생성
     setCurrentGuess(newRndNumber); // 새로운 랜덤 숫자 생성
-    setGuessRounds(prevGuessRounds => [newRndNumber, ...prevGuessRounds]); // 라운드 수 증가
+    setGuessRounds((prevGuessRounds) => [newRndNumber, ...prevGuessRounds]); // 라운드 수 증가
   };
 
   const guessRoundsListLength = guessRounds.length;
@@ -96,8 +96,13 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       <View style={styles.listContainer}>
         <FlatList
           data={guessRounds}
-          renderItem={(itemData) => <Text>{itemData.item}</Text>}
-          keyExtractor={(item) => item}
+          renderItem={(itemData) => (
+            <GuessLogItem
+              roundNumber={guessRoundsListLength - itemData.index} 
+              guess={itemData.item}
+            />
+          )}
+          keyExtractor={(item) => item} 
         />
       </View>
     </View>
