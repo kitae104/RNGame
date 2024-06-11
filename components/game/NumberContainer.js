@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     padding: deviceWidth < 380 ? 12 : 24,
     margin: deviceWidth < 380 ? 12 : 24,
     borderRadius: 8,
+    alignItems: 'center',
     justifyContent: 'center',
   },
   numberText: {
