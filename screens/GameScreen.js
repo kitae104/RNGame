@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1, // 전체 공간 사용
     padding: 24, // padding
+    alignItems: 'center', // 가운데 정렬
   },
   instructionText: {
     marginBottom: 16, // 아래쪽으로 16px 이동
